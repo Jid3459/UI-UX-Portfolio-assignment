@@ -9,14 +9,14 @@ const education = [
   {
     degree: "B.Tech in Computer Science & Engineering",
     school: "Mumbai University",
-    period: "2020 – 2024",
+    period: "2023 – 2027",
     grade: "CGPA: 8.4 / 10",
     highlights: ["Machine Learning", "Data Structures", "Web Technologies", "Computer Vision"],
   },
   {
     degree: "Higher Secondary (XII) – Science",
     school: "BN Bandodkar College of Science",
-    period: "2018 – 2020",
+    period: "2020 – 2023",
     grade: "Percentage: 92%",
     highlights: ["Mathematics", "Physics", "Computer Science"],
   },
