@@ -1,5 +1,5 @@
 import { User, Code2, BookOpen, Briefcase, Heart, FolderGit2, Monitor } from "lucide-react";
-import logoImg from "../../../final-portfolio-image.png";
+import logoImg from "../../../final-portfolio-image.jpg";
 
 interface SidebarProps {
   activeSection: string;
