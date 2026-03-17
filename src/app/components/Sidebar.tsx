@@ -1,5 +1,5 @@
 import { User, Code2, BookOpen, Briefcase, Heart, FolderGit2, Monitor } from "lucide-react";
-import logoImg from "figma:asset/fab473e2fba6a0e439834ba63a2f1fd525253e33.png";
+import logoImg from "../../../final-portfolio-image.png";
 
 interface SidebarProps {
   activeSection: string;
