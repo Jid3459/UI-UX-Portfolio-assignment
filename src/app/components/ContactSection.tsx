@@ -83,6 +83,17 @@ export function ContactSection({ darkMode = true }: ContactSectionProps) {
     return `mailto:${FULL_EMAIL}${qs ? `?${qs}` : ""}`;
   };
 
+  const gmailHref = () => {
+    const params = new URLSearchParams({
+      view: "cm",
+      fs: "1",
+      to: FULL_EMAIL,
+    });
+    if (subject.trim()) params.set("su", subject.trim());
+    if (body.trim()) params.set("body", body.trim());
+    return `https://mail.google.com/mail/?${params.toString()}`;
+  };
+
   return (
     <section id="contact" className="px-8 py-10" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
       <div className="mb-6">
@@ -239,7 +250,9 @@ export function ContactSection({ darkMode = true }: ContactSectionProps) {
 
             <div className="flex flex-wrap items-center gap-2 mt-4">
               <a
-                href={mailtoHref()}
+                href={gmailHref()}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-3 py-2 rounded"
                 style={{
                   backgroundColor: "#238636",
@@ -252,7 +265,23 @@ export function ContactSection({ darkMode = true }: ContactSectionProps) {
                 onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.backgroundColor = "#2ea043")}
                 onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.backgroundColor = "#238636")}
               >
-                <Send size={13} /> open in mail client
+                <Send size={13} /> send via Gmail
+              </a>
+              <a
+                href={mailtoHref()}
+                className="inline-flex items-center gap-2 px-3 py-2 rounded"
+                style={{
+                  backgroundColor: darkMode ? "#21262d" : "#eaeef2",
+                  color: darkMode ? "#e6edf3" : "#1f2328",
+                  fontSize: "12px",
+                  border: `1px solid ${darkMode ? "#30363d" : "#d0d7de"}`,
+                  textDecoration: "none",
+                  fontFamily: "'JetBrains Mono', monospace",
+                }}
+                onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.backgroundColor = darkMode ? "#30363d" : "#d0d7de")}
+                onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.backgroundColor = darkMode ? "#21262d" : "#eaeef2")}
+              >
+                <Send size={13} /> default mail app
               </a>
 
               <a
@@ -295,8 +324,9 @@ export function ContactSection({ darkMode = true }: ContactSectionProps) {
             </div>
 
             <p className="mt-3" style={{ color: "#484f58", fontSize: "10px", fontFamily: "'JetBrains Mono', monospace" }}>
-              # opens your default mail client with the draft pre-filled — nothing is sent
-              until you press send.
+              # "send via Gmail" opens gmail.com in a new tab with the draft pre-filled.
+              "default mail app" uses your OS mail handler (Outlook, Apple Mail, etc.).
+              Either way, nothing is sent until you press send.
             </p>
           </div>
         </div>
