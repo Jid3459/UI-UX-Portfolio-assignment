@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
-import { Download, Eye, Mail, Github } from "lucide-react";
+import { Download, Eye, Mail, Send } from "lucide-react";
+
+const GMAIL_COMPOSE =
+  "https://mail.google.com/mail/?view=cm&fs=1&to=jidneya.kadam23%40spit.ac.in";
 
 const fullName = "Jidneya Kadam";
 
@@ -133,9 +136,10 @@ export function HeroSection({ darkMode = true, onNavigate }: HeroSectionProps) {
           <Mail size={13} /> Contact Me
         </button>
         <a
-          href="https://github.com/Jid3459"
+          href={GMAIL_COMPOSE}
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Compose email in Gmail"
           className="inline-flex items-center gap-2 px-3 py-2 rounded"
           style={{
             backgroundColor: darkMode ? "#21262d" : "#eaeef2",
@@ -145,7 +149,7 @@ export function HeroSection({ darkMode = true, onNavigate }: HeroSectionProps) {
             textDecoration: "none",
           }}
         >
-          <Github size={13} /> GitHub
+          <Send size={13} /> Send Mail
         </a>
       </div>
 
