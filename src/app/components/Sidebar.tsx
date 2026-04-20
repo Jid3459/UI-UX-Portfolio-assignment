@@ -1,4 +1,4 @@
-import { User, Code2, BookOpen, Briefcase, Heart, FolderGit2, Monitor } from "lucide-react";
+import { User, Code2, BookOpen, Briefcase, Heart, FolderGit2, Monitor, Mail } from "lucide-react";
 import logoImg from "../../../final-portfolio-image.jpg";
 
 interface SidebarProps {
@@ -13,6 +13,7 @@ const navItems = [
   { id: "experience", label: "Experience", icon: Briefcase },
   { id: "hobbies", label: "Hobbies", icon: Heart },
   { id: "projects", label: "Projects", icon: FolderGit2 },
+  { id: "contact", label: "Contact", icon: Mail },
 ];
 
 const platforms = ["Figma", "AutoCAD", "Docker"];

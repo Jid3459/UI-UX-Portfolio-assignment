@@ -1,0 +1,156 @@
+/* -----------------------------------------------------------
+   Animations used by the Projects section.
+   Keep everything here instead of inline so cards stay readable.
+   ----------------------------------------------------------- */
+
+@keyframes pc-fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pc-pulse-dot {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(63, 185, 80, 0.55);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(63, 185, 80, 0);
+  }
+}
+
+@keyframes pc-shimmer {
+  0% {
+    transform: translateX(-110%) skewX(-14deg);
+  }
+  100% {
+    transform: translateX(260%) skewX(-14deg);
+  }
+}
+
+@keyframes pc-modal-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes pc-backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Card base — lift + glow on hover */
+.project-card {
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    transform 260ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    border-color 200ms ease,
+    box-shadow 260ms ease,
+    background-color 200ms ease;
+  will-change: transform, box-shadow;
+}
+
+.project-card.is-visible {
+  animation: pc-fade-in-up 520ms cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  border-color: #3fb950 !important;
+  box-shadow:
+    0 10px 24px -12px rgba(63, 185, 80, 0.35),
+    0 0 0 1px rgba(63, 185, 80, 0.25);
+}
+
+/* Diagonal green sheen that sweeps across on hover */
+.project-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(63, 185, 80, 0.08) 45%,
+    rgba(74, 250, 123, 0.18) 50%,
+    rgba(63, 185, 80, 0.08) 55%,
+    transparent 100%
+  );
+  transform: translateX(-110%) skewX(-14deg);
+  pointer-events: none;
+  transition: opacity 200ms ease;
+  opacity: 0;
+}
+
+.project-card:hover::after {
+  opacity: 1;
+  animation: pc-shimmer 900ms ease-in-out;
+}
+
+/* Status badge: breathing dot effect for "active" state */
+.project-status-active {
+  animation: pc-pulse-dot 1.8s ease-out infinite;
+}
+
+/* Arrow on "view details" — slides right on hover */
+.project-card .project-cta-arrow {
+  transition: transform 220ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.project-card:hover .project-cta-arrow {
+  transform: translateX(4px);
+}
+
+/* Tag chip: tiny lift + color accent on hover */
+.project-card .project-tag {
+  transition:
+    background-color 180ms ease,
+    color 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease;
+}
+.project-card:hover .project-tag {
+  border-color: rgba(63, 185, 80, 0.45);
+}
+
+/* Modal entrance */
+.project-modal-backdrop {
+  animation: pc-backdrop-in 180ms ease-out forwards;
+}
+.project-modal {
+  animation: pc-modal-in 240ms cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+  transform-origin: center;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .project-card,
+  .project-card.is-visible,
+  .project-card::after,
+  .project-status-active,
+  .project-modal-backdrop,
+  .project-modal {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

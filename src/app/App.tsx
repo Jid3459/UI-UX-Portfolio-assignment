@@ -1,14 +1,15 @@
 import { useState, useEffect, useRef } from "react";
-import { Linkedin, Moon, Sun, ChevronRight } from "lucide-react";
+import { Linkedin, Moon, Sun, ChevronRight, Github, FileDown } from "lucide-react";
 import { Sidebar } from "./components/Sidebar";
 import { HeroSection } from "./components/HeroSection";
 import { EducationSection } from "./components/EducationSection";
 import { ExperienceSection } from "./components/ExperienceSection";
 import { HobbiesSection } from "./components/HobbiesSection";
 import { ProjectsSection } from "./components/ProjectsSection";
+import { ContactSection } from "./components/ContactSection";
 import logoImg from "../../final-portfolio-image.jpg";
 
-const SECTIONS = ["introduction", "education", "experience", "hobbies", "projects"];
+const SECTIONS = ["introduction", "education", "experience", "hobbies", "projects", "contact"];
 
 export default function App() {
   const [darkMode, setDarkMode] = useState(true);
@@ -108,9 +109,27 @@ export default function App() {
           {/* Right controls */}
           <div className="flex items-center gap-2">
             <a
+              href="https://github.com/Jid3459"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+              className="flex items-center justify-center rounded-full transition-colors duration-200"
+              style={{
+                width: "32px",
+                height: "32px",
+                backgroundColor: iconBg,
+                color: textSecondary,
+              }}
+              onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.backgroundColor = iconHover)}
+              onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.backgroundColor = iconBg)}
+            >
+              <Github size={15} />
+            </a>
+            <a
               href="https://www.linkedin.com/in/jidneya-kadam-794746274/"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="LinkedIn"
               className="flex items-center justify-center rounded-full transition-colors duration-200"
               style={{
                 width: "32px",
@@ -122,6 +141,23 @@ export default function App() {
               onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.backgroundColor = iconBg)}
             >
               <Linkedin size={15} />
+            </a>
+            <a
+              href="/Jidneya_Kadam_Resume.pdf"
+              download="Jidneya-Kadam-Resume.pdf"
+              aria-label="Download resume"
+              title="Download resume (PDF)"
+              className="hidden sm:flex items-center justify-center rounded-full transition-colors duration-200"
+              style={{
+                width: "32px",
+                height: "32px",
+                backgroundColor: iconBg,
+                color: textSecondary,
+              }}
+              onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.backgroundColor = iconHover)}
+              onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.backgroundColor = iconBg)}
+            >
+              <FileDown size={15} />
             </a>
             <button
               onClick={() => setDarkMode((v) => !v)}
@@ -147,7 +183,7 @@ export default function App() {
             className="md:hidden absolute top-[52px] left-0 right-0 z-50 px-4 py-3 flex flex-col gap-1"
             style={{ backgroundColor: headerBg, borderBottom: `1px solid ${headerBorder}` }}
           >
-            {["introduction", "education", "experience", "hobbies", "projects"].map((id) => (
+            {SECTIONS.map((id) => (
               <button
                 key={id}
                 onClick={() => scrollToSection(id)}
@@ -194,7 +230,7 @@ export default function App() {
               transition: "color 0.3s ease",
             }}
           >
-            <HeroSection darkMode={darkMode} />
+            <HeroSection darkMode={darkMode} onNavigate={scrollToSection} />
 
             <div
               style={{
@@ -235,6 +271,16 @@ export default function App() {
             />
 
             <ProjectsSection darkMode={darkMode} />
+
+            <div
+              style={{
+                height: "1px",
+                margin: "0 32px",
+                backgroundColor: darkMode ? "#21262d" : "#e8ecf0",
+              }}
+            />
+
+            <ContactSection darkMode={darkMode} />
 
             {/* Footer */}
             <footer

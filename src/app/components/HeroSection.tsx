@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
+import { Download, Eye, Mail, Github } from "lucide-react";
 
 const fullName = "Jidneya Kadam";
 
 interface HeroSectionProps {
   darkMode?: boolean;
+  onNavigate?: (id: string) => void;
 }
 
-export function HeroSection({ darkMode = true }: HeroSectionProps) {
+export function HeroSection({ darkMode = true, onNavigate }: HeroSectionProps) {
   const [displayed, setDisplayed] = useState("");
   const [cursorVisible, setCursorVisible] = useState(true);
   const [doneTyping, setDoneTyping] = useState(false);
@@ -71,17 +73,81 @@ export function HeroSection({ darkMode = true }: HeroSectionProps) {
       </h1>
 
       <p
-        className="mb-8 max-w-2xl"
+        className="mb-6 max-w-2xl"
         style={{
           color: bodyText,
           fontSize: "13px",
           lineHeight: "1.8",
         }}
       >
-        I am passionate about building intelligent, pixel-perfect applications that solve real-world problems. 
-        My focus spans machine learning, web development, and creating impactful tools. 
+        I am passionate about building intelligent, pixel-perfect applications that solve real-world problems.
+        My focus spans machine learning, web development, and creating impactful tools.
         Feel free to explore my projects, and let's connect if you're looking to collaborate or build something amazing together!
       </p>
+
+      {/* CTA row */}
+      <div className="flex flex-wrap gap-2 mb-8" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
+        <a
+          href="/Jidneya_Kadam_Resume.pdf"
+          download="Jidneya-Kadam-Resume.pdf"
+          className="inline-flex items-center gap-2 px-3 py-2 rounded"
+          style={{
+            backgroundColor: "#238636",
+            color: "#ffffff",
+            fontSize: "12px",
+            border: "1px solid #2ea043",
+            textDecoration: "none",
+          }}
+          onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.backgroundColor = "#2ea043")}
+          onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.backgroundColor = "#238636")}
+        >
+          <Download size={13} /> Download Resume
+        </a>
+        <a
+          href="/Jidneya_Kadam_Resume.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 px-3 py-2 rounded"
+          style={{
+            backgroundColor: darkMode ? "#21262d" : "#eaeef2",
+            color: darkMode ? "#e6edf3" : "#1f2328",
+            fontSize: "12px",
+            border: `1px solid ${darkMode ? "#30363d" : "#d0d7de"}`,
+            textDecoration: "none",
+          }}
+        >
+          <Eye size={13} /> View Resume
+        </a>
+        <button
+          onClick={() => onNavigate?.("contact")}
+          className="inline-flex items-center gap-2 px-3 py-2 rounded"
+          style={{
+            backgroundColor: darkMode ? "#21262d" : "#eaeef2",
+            color: darkMode ? "#e6edf3" : "#1f2328",
+            fontSize: "12px",
+            border: `1px solid ${darkMode ? "#30363d" : "#d0d7de"}`,
+            cursor: "pointer",
+            fontFamily: "'JetBrains Mono', monospace",
+          }}
+        >
+          <Mail size={13} /> Contact Me
+        </button>
+        <a
+          href="https://github.com/Jid3459"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 px-3 py-2 rounded"
+          style={{
+            backgroundColor: darkMode ? "#21262d" : "#eaeef2",
+            color: darkMode ? "#e6edf3" : "#1f2328",
+            fontSize: "12px",
+            border: `1px solid ${darkMode ? "#30363d" : "#d0d7de"}`,
+            textDecoration: "none",
+          }}
+        >
+          <Github size={13} /> GitHub
+        </a>
+      </div>
 
       {/* Skills */}
       <div className="mt-10">
