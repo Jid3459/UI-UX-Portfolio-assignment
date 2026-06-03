@@ -1,29 +1,30 @@
 import { useState, useEffect, useRef } from "react";
-import { Linkedin, Moon, Sun, ChevronRight, Github, FileDown } from "lucide-react";
+import { useLocation } from "react-router";
+import { ChevronRight } from "lucide-react";
 import { Sidebar } from "./components/Sidebar";
+import { TopBar } from "./components/TopBar";
 import { HeroSection } from "./components/HeroSection";
 import { EducationSection } from "./components/EducationSection";
 import { ExperienceSection } from "./components/ExperienceSection";
 import { HobbiesSection } from "./components/HobbiesSection";
 import { ProjectsSection } from "./components/ProjectsSection";
 import { ContactSection } from "./components/ContactSection";
-import logoImg from "../../final-portfolio-image.jpg";
+import { useDarkMode } from "./theme/useDarkMode";
 
 const SECTIONS = ["introduction", "education", "experience", "hobbies", "projects", "contact"];
 
 export default function App() {
-  const [darkMode, setDarkMode] = useState(true);
+  const [darkMode, toggleDarkMode] = useDarkMode();
   const [activeSection, setActiveSection] = useState("introduction");
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const mainRef = useRef<HTMLDivElement>(null);
+  const location = useLocation();
 
   const bg = darkMode ? "#0d1117" : "#f0f2f4";
   const headerBg = darkMode ? "#161b22" : "#ffffff";
   const headerBorder = darkMode ? "#30363d" : "#d0d7de";
   const textPrimary = darkMode ? "#e6edf3" : "#1f2328";
   const textSecondary = darkMode ? "#8b949e" : "#656d76";
-  const iconBg = darkMode ? "#21262d" : "#eaeef2";
-  const iconHover = darkMode ? "#30363d" : "#d0d7de";
 
   // Track active section on scroll
   useEffect(() => {
@@ -57,6 +58,21 @@ export default function App() {
     }
   };
 
+  // When arriving from a detail page via /#section, jump to that section.
+  useEffect(() => {
+    const id = location.hash.replace("#", "");
+    if (!id || !SECTIONS.includes(id)) return;
+    // Wait a frame so the sections have laid out before scrolling.
+    const t = setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el && mainRef.current) {
+        mainRef.current.scrollTo({ top: el.offsetTop - 16, behavior: "auto" });
+        setActiveSection(id);
+      }
+    }, 50);
+    return () => clearTimeout(t);
+  }, [location.hash]);
+
   return (
     <div
       className="flex h-screen overflow-hidden"
@@ -76,106 +92,12 @@ export default function App() {
       {/* Main area — offset by sidebar width on md+ */}
       <div className="flex flex-col flex-1 overflow-hidden md:ml-[220px]">
         {/* Top Header */}
-        <header
-          className="flex items-center justify-between px-6 py-3 shrink-0 relative z-20"
-          style={{
-            backgroundColor: headerBg,
-            borderBottom: `1px solid ${headerBorder}`,
-            height: "52px",
-            transition: "background-color 0.3s ease",
-          }}
-        >
-          {/* Brand */}
-          <div className="flex items-center gap-2">
-            {/* Mobile menu button */}
-            <button
-              className="md:hidden mr-2 p-1 rounded"
-              style={{ color: textSecondary, backgroundColor: "transparent" }}
-              onClick={() => setMobileNavOpen((v) => !v)}
-            >
-              <ChevronRight size={16} style={{ transform: mobileNavOpen ? "rotate(90deg)" : "none", transition: "transform 0.2s" }} />
-            </button>
-            <div
-              className="rounded overflow-hidden flex-shrink-0"
-              style={{ width: "28px", height: "28px", border: "1px solid #30363d" }}
-            >
-              <img src={logoImg} alt="JK Logo" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-            </div>
-            <span style={{ color: textPrimary, fontSize: "13px", fontWeight: 700 }}>
-              Jidneya Kadam
-            </span>
-          </div>
-
-          {/* Right controls */}
-          <div className="flex items-center gap-2">
-            <a
-              href="https://github.com/Jid3459"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="GitHub"
-              className="flex items-center justify-center rounded-full transition-colors duration-200"
-              style={{
-                width: "32px",
-                height: "32px",
-                backgroundColor: iconBg,
-                color: textSecondary,
-              }}
-              onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.backgroundColor = iconHover)}
-              onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.backgroundColor = iconBg)}
-            >
-              <Github size={15} />
-            </a>
-            <a
-              href="https://www.linkedin.com/in/jidneya-kadam-794746274/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="LinkedIn"
-              className="flex items-center justify-center rounded-full transition-colors duration-200"
-              style={{
-                width: "32px",
-                height: "32px",
-                backgroundColor: iconBg,
-                color: textSecondary,
-              }}
-              onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.backgroundColor = iconHover)}
-              onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.backgroundColor = iconBg)}
-            >
-              <Linkedin size={15} />
-            </a>
-            <a
-              href="/Jidneya_Kadam_Resume.pdf"
-              download="Jidneya-Kadam-Resume.pdf"
-              aria-label="Download resume"
-              title="Download resume (PDF)"
-              className="hidden sm:flex items-center justify-center rounded-full transition-colors duration-200"
-              style={{
-                width: "32px",
-                height: "32px",
-                backgroundColor: iconBg,
-                color: textSecondary,
-              }}
-              onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.backgroundColor = iconHover)}
-              onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.backgroundColor = iconBg)}
-            >
-              <FileDown size={15} />
-            </a>
-            <button
-              onClick={() => setDarkMode((v) => !v)}
-              className="flex items-center justify-center rounded-full transition-colors duration-200"
-              style={{
-                width: "32px",
-                height: "32px",
-                backgroundColor: iconBg,
-                color: textSecondary,
-                cursor: "pointer",
-              }}
-              onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.backgroundColor = iconHover)}
-              onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.backgroundColor = iconBg)}
-            >
-              {darkMode ? <Sun size={15} /> : <Moon size={15} />}
-            </button>
-          </div>
-        </header>
+        <TopBar
+          darkMode={darkMode}
+          onToggleDark={toggleDarkMode}
+          mobileNavOpen={mobileNavOpen}
+          onToggleMobileNav={() => setMobileNavOpen((v) => !v)}
+        />
 
         {/* Mobile nav dropdown */}
         {mobileNavOpen && (

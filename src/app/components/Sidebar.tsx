@@ -1,5 +1,7 @@
 import { User, Code2, BookOpen, Briefcase, Heart, FolderGit2, Monitor, Mail } from "lucide-react";
-import logoImg from "../../../final-portfolio-image.jpg";
+
+// Served from /public — referenced by URL, not bundled.
+const logoImg = "/final-portfolio-image.jpg";
 
 interface SidebarProps {
   activeSection: string;
