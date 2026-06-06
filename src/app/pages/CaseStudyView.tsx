@@ -119,12 +119,13 @@ export function CaseStudyView({ project, caseStudy, darkMode }: CaseStudyViewPro
         <SectionRow
           marker={<SectionMarker icon={<Sparkles size={22} />} title="HIGHLIGHTS" index={4} t={t} />}
         >
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-2.5">
             {caseStudy.highlights.map((h, i) => (
               <span
                 key={i}
                 style={{
                   display: "inline-block",
+                  maxWidth: "100%",
                   padding: "9px 16px",
                   borderRadius: "999px",
                   border: `1px solid ${darkMode ? "#30363d" : "#d0d7de"}`,
@@ -132,6 +133,8 @@ export function CaseStudyView({ project, caseStudy, darkMode }: CaseStudyViewPro
                   color: t.body,
                   fontSize: "12.5px",
                   lineHeight: 1.4,
+                  whiteSpace: "normal",
+                  wordBreak: "break-word",
                 }}
               >
                 {h}
