@@ -137,20 +137,10 @@ export function CaseStudyView({ project, caseStudy, darkMode }: CaseStudyViewPro
                     lineHeight: 1.4,
                     whiteSpace: "normal",
                     wordBreak: "break-word",
-                    transition: "transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease",
+                    transition: "border-color 180ms ease",
                   }}
-                  onMouseEnter={(e) => {
-                    const el = e.currentTarget as HTMLSpanElement;
-                    el.style.borderColor = "#3fb950";
-                    el.style.transform = "translateY(-2px)";
-                    el.style.boxShadow = "0 6px 16px -8px rgba(63,185,80,0.45)";
-                  }}
-                  onMouseLeave={(e) => {
-                    const el = e.currentTarget as HTMLSpanElement;
-                    el.style.borderColor = baseBorder;
-                    el.style.transform = "none";
-                    el.style.boxShadow = "none";
-                  }}
+                  onMouseEnter={(e) => ((e.currentTarget as HTMLSpanElement).style.borderColor = "#3fb950")}
+                  onMouseLeave={(e) => ((e.currentTarget as HTMLSpanElement).style.borderColor = baseBorder)}
                 >
                   {h}
                 </span>
