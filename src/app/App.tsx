@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { ChevronRight } from "lucide-react";
 import { Sidebar } from "./components/Sidebar";
 import { TopBar } from "./components/TopBar";
@@ -19,6 +19,7 @@ export default function App() {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const mainRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const bg = darkMode ? "#0d1117" : "#f0f2f4";
   const headerBg = darkMode ? "#161b22" : "#ffffff";
@@ -58,7 +59,9 @@ export default function App() {
     }
   };
 
-  // When arriving from a detail page via /#section, jump to that section.
+  // When arriving from a detail page via /#section, jump to that section,
+  // then strip the hash so the home page URL stays a clean "/" (otherwise
+  // the leftover #section lingers in the address bar as you scroll away).
   useEffect(() => {
     const id = location.hash.replace("#", "");
     if (!id || !SECTIONS.includes(id)) return;
@@ -69,9 +72,11 @@ export default function App() {
         mainRef.current.scrollTo({ top: el.offsetTop - 16, behavior: "auto" });
         setActiveSection(id);
       }
+      // Clear the hash from the URL without adding a history entry.
+      navigate("/", { replace: true });
     }, 50);
     return () => clearTimeout(t);
-  }, [location.hash]);
+  }, [location.hash, navigate]);
 
   return (
     <div
