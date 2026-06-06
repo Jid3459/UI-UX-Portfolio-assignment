@@ -7,15 +7,15 @@ interface ExperienceSectionProps {
 
 const experiences = [
   {
-    role: "Freelance Developer",
-    company: "Self-employed",
-    period: "2022 – Dec 2023",
-    type: "Freelance",
+    role: "AI/ML Intern",
+    company: "AIM4U Software Solutions",
+    period: "Aug 2025 – Oct 2025",
+    type: "Internship",
     status: "completed",
     progress: 100,
     description:
-      "Built custom web applications, ML pipelines, and automation tools for multiple clients across different industries.",
-    stack: ["React", "Node.js", "TensorFlow", "REST API", "Git"],
+      "Built a multi-class skin-disease classifier (Acne Vulgaris, Acne Scars, Acne Corporis, Melasma) on OpenAI's CLIP, engineering a transfer-learning pipeline that boosted detection by 15% and an end-to-end multimodal image-and-text data pipeline reaching 89% overall accuracy.",
+    stack: ["Python", "OpenAI CLIP", "Transfer Learning", "Multimodal ML"],
   },
 ];
 

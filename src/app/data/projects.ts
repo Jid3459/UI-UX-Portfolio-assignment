@@ -120,7 +120,7 @@ export const projects: Project[] = [
     detail: {
       tagline: "From a single brief to brand-safe, legally-reviewed, multi-channel publication — orchestrated by 8 AI agents.",
       overview: [
-        "ContentShield is a production-grade, multi-agent AI pipeline that automates the full lifecycle of enterprise marketing content — from a single brief through strategy, drafting, brand compliance, legal review, localization, and multi-channel distribution.",
+        "ContentShield is a production-grade, multi-agent AI pipeline where enterprises register their brand profile and documents, then auto-generate compliant, on-brand social-media content — orchestrated end-to-end from strategy and drafting through brand compliance, localization, and publishing to configured channels.",
       ],
       motivation: [
         "Enterprise content teams spend hours shepherding one asset through copywriting, brand checks, and legal sign-off — and a single missed compliance rule can trigger a regulatory fine. I wanted to compress that cycle dramatically without removing the human safeguards that keep it safe.",
@@ -138,7 +138,7 @@ export const projects: Project[] = [
       features: [
         "Legal RAG grounded in actual RBI / ASCI / NPCI documents, citing the exact circular for each flagged claim.",
         "Real-time brand compliance scoring with violation highlighting and automatic revision loops.",
-        "Knowledge-to-content: upload internal PDFs / DOCX / CSV and agents retrieve relevant chunks before drafting.",
+        "Brand profile and documents stored as Qdrant embeddings, retrieved with keyword-guided queries (tone, banned words, audience persona) to keep output grounded and on-brand.",
         "Multi-language output (English, Hindi, Tamil, Telugu, Bengali) via Sarvam-1 with LLM refinement.",
         "Branded, platform-specific image cards generated through Playwright HTML rendering.",
         "Live ROI dashboard: hours saved, cost reduction, and violations caught.",
@@ -213,47 +213,47 @@ export const projects: Project[] = [
   {
     slug: "skintara",
     name: "SkinTara",
-    subtitle: "Skin Disease Detector",
+    subtitle: "Multi-Class Skin Disease Classifier",
     description:
-      "Deep learning application for non-invasive skin disease detection from images. Uses a fine-tuned CNN to classify multiple dermatological conditions with high accuracy.",
+      "A multi-class skin-disease classifier for Acne Vulgaris, Acne Scars, Acne Corporis, and Melasma, built on OpenAI's CLIP with a transfer-learning pipeline and multimodal image-and-text embeddings — reaching 89% accuracy for early, accessible triage.",
     details: [
-      "Transfer-learning CNN trained on labeled dermatological datasets.",
-      "OpenCV preprocessing pipeline for lesion isolation and normalization.",
-      "Mobile-first React Native client talks to a FastAPI inference service.",
-      "Designed for early-stage triage in low-resource telemedicine scenarios.",
+      "OpenAI CLIP backbone with a transfer-learning pipeline that lifted detection by 15% over the prior model.",
+      "Multimodal embeddings combining images and natural-language prompts.",
+      "Multi-class classification across four acne and pigmentation conditions.",
+      "89% overall accuracy on the curated dataset; built during the AIM4U AI/ML internship.",
     ],
-    stack: ["Python", "TensorFlow", "OpenCV", "FastAPI", "React Native"],
+    stack: ["Python", "OpenAI CLIP", "Transfer Learning", "Multimodal Embeddings"],
     github: "https://github.com/knishkagithub/Dermakure_new_phonepe",
     status: "complete",
     year: "2025",
     detail: {
-      tagline: "Deep-learning skin-disease detection from a single photo, built for early, low-cost triage.",
+      tagline: "Multi-class skin-disease detection with OpenAI's CLIP and multimodal embeddings — built for early, accessible triage.",
       overview: [
-        "SkinTara classifies multiple dermatological conditions from a single image, aimed at early-stage triage in low-resource and telemedicine settings where a dermatologist may not be readily available.",
+        "SkinTara is a multi-class skin-disease classifier covering Acne Vulgaris, Acne Scars, Acne Corporis, and Melasma. It uses OpenAI's CLIP with a transfer-learning pipeline and multimodal embeddings — images paired with natural-language prompts — to make early screening more accessible. Built during my AI/ML internship at AIM4U Software Solutions.",
       ],
       motivation: [
-        "Access to dermatologists is limited in many areas, and early detection dramatically improves outcomes. I wanted a phone-friendly tool that could flag conditions early enough to matter.",
+        "Access to dermatologists is limited in many areas, and early detection dramatically improves outcomes. I wanted a model that could reliably distinguish visually similar skin conditions from a single image.",
       ],
       problem: [
-        "Skin conditions are visually similar and hard to assess without a specialist, and in-person dermatology simply isn't accessible everywhere.",
+        "Acne variants and pigmentation conditions like melasma look alike and are hard to tell apart without a specialist, and the existing model struggled to generalize across them.",
       ],
       solution: [
-        "A transfer-learning CNN, fine-tuned on dermatological data and served to a mobile-first client, that flags likely conditions for follow-up rather than issuing a final diagnosis.",
+        "A CLIP-based transfer-learning pipeline that fuses image and natural-language prompt embeddings to classify the four conditions, improving detection by 15% over the existing model.",
       ],
       technicalDeepDive: [
-        "Images are preprocessed with OpenCV (lesion isolation and normalization) before inference. A transfer-learning CNN outputs class probabilities across the supported conditions, and FastAPI serves predictions to the React Native app over a simple REST interface.",
+        "An end-to-end data pipeline pairs CLIP image embeddings with natural-language prompt embeddings, and transfer learning adapts the model to the four target conditions — reaching 89% overall accuracy on the curated multimodal dataset.",
       ],
       features: [
-        "Transfer-learning CNN fine-tuned on labeled dermatological datasets.",
-        "OpenCV preprocessing for lesion isolation and normalization.",
-        "Mobile-first React Native client backed by a FastAPI inference service.",
-        "Designed for triage — flags conditions for follow-up, not final diagnosis.",
+        "Multi-class classification across Acne Vulgaris, Acne Scars, Acne Corporis, and Melasma.",
+        "OpenAI CLIP backbone with a transfer-learning pipeline (+15% detection over the prior model).",
+        "Multimodal embeddings combining images and natural-language prompts.",
+        "89% overall accuracy on the curated dataset.",
       ],
       results: [
-        "Provides a fast, non-invasive first-pass assessment from a single photo, lowering the barrier to early skin-condition screening.",
+        "The transfer-learning approach lifted detection by 15% over the existing model and reached 89% overall accuracy, giving a fast, non-invasive first-pass screen from a single image.",
       ],
       challenges: [
-        "Class imbalance and visual similarity between conditions were mitigated with transfer learning and targeted preprocessing, while keeping inference light enough for mobile and low-resource scenarios.",
+        "Distinguishing visually similar conditions was the core difficulty, addressed with multimodal image-plus-text embeddings and transfer learning rather than relying on image features alone.",
       ],
       futureScope: [
         "Broaden the set of detectable conditions, add on-device inference for offline use, and validate against larger, more diverse clinical datasets.",
@@ -266,49 +266,50 @@ export const projects: Project[] = [
   {
     slug: "news-bias-detector",
     name: "Geopolitical News Bias Detector",
-    subtitle: "ML-Powered Media Bias Analysis",
+    subtitle: "BERT-Based Political Bias Classifier",
     description:
-      "Machine learning pipeline that analyzes news articles and surfaces geopolitical bias patterns across sources using sentiment analysis and fine-tuned language models.",
+      "A machine-learning pipeline that classifies news articles as Left, Right, or Center biased using a fine-tuned BERT model — trained on 2,000+ articles sourced via the NewsAPI and reaching roughly 90% accuracy.",
     details: [
-      "BERT-based classifier trained on annotated bias corpora.",
-      "Flask API serves per-article bias scores and source-level aggregates.",
-      "D3.js dashboard visualizes framing shifts across topics and outlets over time.",
-      "Built to make media bias visible and quantifiable rather than anecdotal.",
+      "Fine-tuned BERT classifier labeling articles Left, Right, or Center.",
+      "Trained on a labeled dataset of 2,000+ articles sourced via the NewsAPI.",
+      "Achieves approximately 90% classification accuracy.",
+      "Built for deployment as a web tool or browser extension.",
     ],
-    stack: ["Python", "scikit-learn", "BERT", "Flask", "React", "D3.js"],
+    stack: ["Python", "BERT", "NewsAPI", "scikit-learn"],
     github: "#",
     status: "prototype",
     year: "2025",
     detail: {
-      tagline: "Turning a fuzzy, anecdotal problem — media bias — into measurable, visualized signal.",
+      tagline: "A fine-tuned BERT classifier that labels news articles Left, Right, or Center — making media bias measurable.",
       overview: [
-        "This project analyzes news articles to surface geopolitical bias patterns across outlets, replacing anecdotal claims of 'bias' with quantifiable, comparable scores.",
+        "This project classifies news articles as Left, Right, or Center biased using a fine-tuned BERT model, turning anecdotal claims of 'bias' into a measurable signal that reaches roughly 90% accuracy.",
       ],
       motivation: [
-        "Debates about media bias are usually anecdotal. I wanted to make framing measurable so it could be compared across sources rather than just argued about.",
+        "Debates about media bias are usually anecdotal. I wanted to make political framing measurable so it could be compared across outlets rather than just argued about.",
       ],
       problem: [
-        "'Bias' is hard to pin down objectively, and readers rarely have a way to compare how different outlets frame the same geopolitical events.",
+        "'Bias' is hard to pin down objectively, and readers rarely have a way to gauge how far Left, Right, or Center a given outlet leans on the same story.",
       ],
       solution: [
-        "A BERT-based classifier combined with sentiment analysis that scores framing per article, then aggregates bias by source and topic and visualizes the patterns.",
+        "A fine-tuned BERT classifier trained on a labeled dataset of 2,000+ articles sourced via the NewsAPI, predicting a Left / Right / Center label for each article.",
       ],
       technicalDeepDive: [
-        "Articles are classified by a fine-tuned BERT model, with sentiment and framing features extracted per article. A Flask API serves the scores, which are aggregated by outlet and topic and rendered in a D3.js dashboard that shows how framing shifts across sources over time.",
+        "Over 2,000 news articles were collected through the NewsAPI, structured into a labeled dataset, and preprocessed for training. A fine-tuned BERT model then classifies each article's political lean, reaching approximately 90% accuracy.",
       ],
       features: [
-        "BERT-based classifier trained on annotated bias corpora.",
-        "Per-article scores plus source-level aggregates via a Flask API.",
-        "D3.js dashboard visualizing framing shifts across outlets and topics.",
+        "Fine-tuned BERT classifier labeling articles Left, Right, or Center.",
+        "Labeled dataset of 2,000+ articles sourced via the NewsAPI.",
+        "Approximately 90% classification accuracy.",
+        "Designed for deployment as a web tool or browser extension.",
       ],
       results: [
-        "Makes media framing comparable at a glance, turning a subjective debate into a data-backed visualization.",
+        "Reached around 90% accuracy on Left / Right / Center classification, giving readers a quick, data-backed read on an outlet's political framing.",
       ],
       challenges: [
-        "Defining 'bias' objectively was the core difficulty, handled by training on annotated corpora and reporting relative framing rather than claiming absolute truth.",
+        "Defining 'bias' objectively was the core difficulty, handled by training on a carefully labeled corpus and reporting a framing category rather than claiming absolute truth.",
       ],
       futureScope: [
-        "Expand outlet and language coverage, add real-time article ingestion, and publish the dashboard as a public, interactive tool.",
+        "Deploy as a public web tool or browser extension, expand outlet and language coverage, and add real-time article ingestion.",
       ],
       resources: [],
     },
