@@ -120,26 +120,42 @@ export function CaseStudyView({ project, caseStudy, darkMode }: CaseStudyViewPro
           marker={<SectionMarker icon={<Sparkles size={22} />} title="HIGHLIGHTS" index={4} t={t} />}
         >
           <div className="flex flex-wrap gap-2.5">
-            {caseStudy.highlights.map((h, i) => (
-              <span
-                key={i}
-                style={{
-                  display: "inline-block",
-                  maxWidth: "100%",
-                  padding: "9px 16px",
-                  borderRadius: "999px",
-                  border: `1px solid ${darkMode ? "#30363d" : "#d0d7de"}`,
-                  backgroundColor: t.cardBg,
-                  color: t.body,
-                  fontSize: "12.5px",
-                  lineHeight: 1.4,
-                  whiteSpace: "normal",
-                  wordBreak: "break-word",
-                }}
-              >
-                {h}
-              </span>
-            ))}
+            {caseStudy.highlights.map((h, i) => {
+              const baseBorder = darkMode ? "#30363d" : "#d0d7de";
+              return (
+                <span
+                  key={i}
+                  style={{
+                    display: "inline-block",
+                    maxWidth: "100%",
+                    padding: "9px 16px",
+                    borderRadius: "999px",
+                    border: `1px solid ${baseBorder}`,
+                    backgroundColor: t.cardBg,
+                    color: t.body,
+                    fontSize: "12.5px",
+                    lineHeight: 1.4,
+                    whiteSpace: "normal",
+                    wordBreak: "break-word",
+                    transition: "transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    const el = e.currentTarget as HTMLSpanElement;
+                    el.style.borderColor = "#3fb950";
+                    el.style.transform = "translateY(-2px)";
+                    el.style.boxShadow = "0 6px 16px -8px rgba(63,185,80,0.45)";
+                  }}
+                  onMouseLeave={(e) => {
+                    const el = e.currentTarget as HTMLSpanElement;
+                    el.style.borderColor = baseBorder;
+                    el.style.transform = "none";
+                    el.style.boxShadow = "none";
+                  }}
+                >
+                  {h}
+                </span>
+              );
+            })}
           </div>
         </SectionRow>
       </div>
