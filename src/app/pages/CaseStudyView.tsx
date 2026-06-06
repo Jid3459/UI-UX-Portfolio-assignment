@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Figma, Layers, AlertTriangle, Palette, Smartphone, ExternalLink, ImageIcon } from "lucide-react";
+import { Figma, Layers, AlertTriangle, Palette, Sparkles, Smartphone, ExternalLink, ImageIcon } from "lucide-react";
 import type { CaseStudy, Project, ScreenComparison } from "../data/projects";
 import { caseTokens, SectionMarker, SectionRow, Pill, type CaseTokens } from "./caseStudyKit";
 
@@ -113,6 +113,31 @@ export function CaseStudyView({ project, caseStudy, darkMode }: CaseStudyViewPro
           marker={<SectionMarker icon={<Palette size={22} />} title="DESIGN PROCESS" index={3} t={t} />}
         >
           <ProcessTimeline steps={caseStudy.process} t={t} />
+        </SectionRow>
+
+        {/* ---------------- Highlights (Section 04) ---------------- */}
+        <SectionRow
+          marker={<SectionMarker icon={<Sparkles size={22} />} title="HIGHLIGHTS" index={4} t={t} />}
+        >
+          <div className="flex flex-wrap gap-3">
+            {caseStudy.highlights.map((h, i) => (
+              <span
+                key={i}
+                style={{
+                  display: "inline-block",
+                  padding: "9px 16px",
+                  borderRadius: "999px",
+                  border: `1px solid ${darkMode ? "#30363d" : "#d0d7de"}`,
+                  backgroundColor: t.cardBg,
+                  color: t.body,
+                  fontSize: "12.5px",
+                  lineHeight: 1.4,
+                }}
+              >
+                {h}
+              </span>
+            ))}
+          </div>
         </SectionRow>
       </div>
 

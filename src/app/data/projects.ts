@@ -45,6 +45,7 @@ export interface CaseStudy {
   overview: string;
   problems: string[];
   process: ProcessStep[];
+  highlights: string[];
   screens: ScreenComparison[];
 }
 
@@ -375,6 +376,13 @@ export const projects: Project[] = [
           title: "Testing",
           body: "Iterated on designs based on user feedback, focusing on accessibility and performance improvements.",
         },
+      ],
+      highlights: [
+        "Modern minimalist design with India's tricolor-inspired color scheme",
+        "Improved accessibility with WCAG 2.1 AA compliance",
+        "Reduced navigation steps by 40% for common tasks",
+        "Enhanced document preview and sharing capabilities",
+        "Mobile-first responsive design for all screen sizes",
       ],
       screens: [
         {
