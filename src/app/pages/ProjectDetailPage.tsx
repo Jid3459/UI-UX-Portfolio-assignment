@@ -29,10 +29,12 @@ export function ProjectDetailPage() {
     window.scrollTo(0, 0);
   }, [slug]);
 
-  // Sidebar nav from a detail page returns home and scrolls to the section.
+  // Sidebar nav / breadcrumb from a detail page returns home and scrolls to
+  // the section. The target rides along as router state so the URL goes
+  // straight to "/" with no intermediate /#section flicker.
   const goToSection = (id: string) => {
     setMobileNavOpen(false);
-    navigate({ pathname: "/", hash: id });
+    navigate("/", { state: { scrollTo: id } });
   };
 
   return (
@@ -80,30 +82,43 @@ export function ProjectDetailPage() {
               color: "#484f58",
             }}
           >
-            <Link to="/" style={{ color: "#3fb950", textDecoration: "none" }}>~/portfolio</Link>
+            <button
+              onClick={() => goToSection("introduction")}
+              className="bg-transparent p-0 hover:underline"
+              style={{ color: "#3fb950", cursor: "pointer", fontFamily: "'JetBrains Mono', monospace", fontSize: "11px" }}
+            >
+              ~/portfolio
+            </button>
             <ChevronRight size={10} />
-            <Link to={{ pathname: "/", hash: "projects" }} style={{ color: "#58d5f8", textDecoration: "none" }}>projects</Link>
+            <button
+              onClick={() => goToSection("projects")}
+              className="bg-transparent p-0 hover:underline"
+              style={{ color: "#58d5f8", cursor: "pointer", fontFamily: "'JetBrains Mono', monospace", fontSize: "11px" }}
+            >
+              projects
+            </button>
             <ChevronRight size={10} />
-            <span style={{ color: textSecondary }}>{slug}</span>
+            <span style={{ color: textSecondary }}>{project ? project.name : slug}</span>
           </div>
 
           {/* Back button — returns to the home page project list */}
           <div className="px-6 md:px-8 pt-5">
-            <Link
-              to={{ pathname: "/", hash: "projects" }}
+            <button
+              onClick={() => goToSection("projects")}
               className="inline-flex items-center gap-2 px-3 py-2 rounded"
               style={{
                 color: textPrimary,
                 fontSize: "12px",
-                textDecoration: "none",
+                cursor: "pointer",
+                fontFamily: "'JetBrains Mono', monospace",
                 backgroundColor: darkMode ? "#21262d" : "#eaeef2",
                 border: `1px solid ${darkMode ? "#30363d" : "#d0d7de"}`,
               }}
-              onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.borderColor = "#3fb950")}
-              onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.borderColor = darkMode ? "#30363d" : "#d0d7de")}
+              onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.borderColor = "#3fb950")}
+              onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.borderColor = darkMode ? "#30363d" : "#d0d7de")}
             >
               <ArrowLeft size={14} /> all projects
-            </Link>
+            </button>
           </div>
 
           {renderBody(project, darkMode)}

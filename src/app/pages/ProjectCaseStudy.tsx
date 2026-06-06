@@ -86,7 +86,7 @@ export function ProjectCaseStudy({ project, detail, darkMode }: ProjectCaseStudy
           {/* Tech chips */}
           <div className="flex flex-wrap gap-2 mt-6">
             {project.stack.map((s) => (
-              <span key={s} style={t.tagPill}>{s.toUpperCase()}</span>
+              <span key={s} style={t.tagPill}>{s}</span>
             ))}
           </div>
 

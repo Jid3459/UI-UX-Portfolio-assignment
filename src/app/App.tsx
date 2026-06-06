@@ -14,12 +14,17 @@ import { useDarkMode } from "./theme/useDarkMode";
 const SECTIONS = ["introduction", "education", "experience", "hobbies", "projects", "contact"];
 
 export default function App() {
-  const [darkMode, toggleDarkMode] = useDarkMode();
-  const [activeSection, setActiveSection] = useState("introduction");
-  const [mobileNavOpen, setMobileNavOpen] = useState(false);
-  const mainRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
   const navigate = useNavigate();
+  const [darkMode, toggleDarkMode] = useDarkMode();
+  // Start on the section we were asked to scroll to (via router state, or a
+  // /#hash link) so the sidebar doesn't flash "introduction" first.
+  const [activeSection, setActiveSection] = useState(() => {
+    const target = (location.state as { scrollTo?: string } | null)?.scrollTo ?? location.hash.replace("#", "");
+    return SECTIONS.includes(target) ? target : "introduction";
+  });
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const mainRef = useRef<HTMLDivElement>(null);
 
   const bg = darkMode ? "#0d1117" : "#f0f2f4";
   const headerBg = darkMode ? "#161b22" : "#ffffff";
@@ -59,11 +64,13 @@ export default function App() {
     }
   };
 
-  // When arriving from a detail page via /#section, jump to that section,
-  // then strip the hash so the home page URL stays a clean "/" (otherwise
-  // the leftover #section lingers in the address bar as you scroll away).
+  // When arriving from a detail page, jump to the requested section. The
+  // target is passed via router state (no URL change → no address-bar flicker);
+  // an external /#section link is still supported as a fallback. Afterwards we
+  // reset to a clean "/" so nothing lingers in the URL.
   useEffect(() => {
-    const id = location.hash.replace("#", "");
+    const stateTarget = (location.state as { scrollTo?: string } | null)?.scrollTo;
+    const id = stateTarget ?? location.hash.replace("#", "");
     if (!id || !SECTIONS.includes(id)) return;
     // Wait a frame so the sections have laid out before scrolling.
     const t = setTimeout(() => {
@@ -72,11 +79,11 @@ export default function App() {
         mainRef.current.scrollTo({ top: el.offsetTop - 16, behavior: "auto" });
         setActiveSection(id);
       }
-      // Clear the hash from the URL without adding a history entry.
-      navigate("/", { replace: true });
+      // Clear any hash/state without adding a history entry.
+      if (location.hash || location.state) navigate("/", { replace: true });
     }, 50);
     return () => clearTimeout(t);
-  }, [location.hash, navigate]);
+  }, [location.key, location.hash, location.state, navigate]);
 
   return (
     <div
@@ -145,9 +152,21 @@ export default function App() {
               fontFamily: "'JetBrains Mono', monospace",
             }}
           >
-            <span style={{ color: "#3fb950" }}>~/portfolio</span>
+            <button
+              onClick={() => scrollToSection("introduction")}
+              className="bg-transparent p-0 hover:underline"
+              style={{ color: "#3fb950", cursor: "pointer", fontFamily: "'JetBrains Mono', monospace", fontSize: "11px" }}
+            >
+              ~/portfolio
+            </button>
             <ChevronRight size={10} />
-            <span style={{ color: "#58d5f8" }}>{activeSection}</span>
+            <button
+              onClick={() => scrollToSection(activeSection)}
+              className="bg-transparent p-0 hover:underline capitalize"
+              style={{ color: "#58d5f8", cursor: "pointer", fontFamily: "'JetBrains Mono', monospace", fontSize: "11px" }}
+            >
+              {activeSection}
+            </button>
           </div>
 
           {/* Sections */}
