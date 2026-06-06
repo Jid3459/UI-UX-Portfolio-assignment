@@ -6,6 +6,7 @@ import { TopBar } from "../components/TopBar";
 import { useDarkMode } from "../theme/useDarkMode";
 import { getProjectBySlug, statusColor } from "../data/projects";
 import { CaseStudyView } from "./CaseStudyView";
+import { ProjectCaseStudy } from "./ProjectCaseStudy";
 
 const SECTIONS = ["introduction", "education", "experience", "hobbies", "projects", "contact"];
 
@@ -105,15 +106,7 @@ export function ProjectDetailPage() {
             </Link>
           </div>
 
-          {project ? (
-            project.caseStudy ? (
-              <CaseStudyView project={project} caseStudy={project.caseStudy} darkMode={darkMode} />
-            ) : (
-              <GenericDetail project={project} darkMode={darkMode} />
-            )
-          ) : (
-            <NotFound darkMode={darkMode} />
-          )}
+          {renderBody(project, darkMode)}
 
           {/* Footer */}
           <footer
@@ -137,6 +130,15 @@ export function ProjectDetailPage() {
       </div>
     </div>
   );
+}
+
+/* Pick the right body for a project: UX case study, technical case study,
+   compact generic fallback, or 404. */
+function renderBody(project: ReturnType<typeof getProjectBySlug>, darkMode: boolean) {
+  if (!project) return <NotFound darkMode={darkMode} />;
+  if (project.caseStudy) return <CaseStudyView project={project} caseStudy={project.caseStudy} darkMode={darkMode} />;
+  if (project.detail) return <ProjectCaseStudy project={project} detail={project.detail} darkMode={darkMode} />;
+  return <GenericDetail project={project} darkMode={darkMode} />;
 }
 
 /* ---------- Compact layout for projects without a full case study ---------- */
